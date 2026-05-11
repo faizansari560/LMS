@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LMS — Lawyer Management System</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold:    #c9a84c;
+    --gold-lt: #e8c97a;
+    --dark:    #0d0f14;
+    --dark2:   #151820;
+    --dark3:   #1e2230;
+    --panel:   #1a1d28;
+    --border:  rgba(201,168,76,0.2);
+    --text:    #e8e8e8;
+    --muted:   #8a8fa8;
+    --danger:  #e05a5a;
+    --success: #4caf82;
+  }
+
+  body {
+    background: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    overflow: hidden;
+  }
+
+  /* ─── LEFT PANEL ─── */
+  .left-panel {
+    flex: 1;
+    background: linear-gradient(135deg, #0d1020 0%, #141828 60%, #1a2038 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .left-panel::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .scales-icon {
+    font-size: 80px;
+    color: var(--gold);
+    margin-bottom: 28px;
+    filter: drop-shadow(0 0 30px rgba(201,168,76,0.4));
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+  }
+  .brand-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: #fff;
+    text-align: center;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .brand-title span { color: var(--gold); }
+  .brand-subtitle {
+    color: var(--muted);
+    font-size: 15px;
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 48px;
+  }
+  .features { display: flex; flex-direction: column; gap: 18px; width: 100%; max-width: 340px; }
+  .feature {
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 18px;
+  }
+  .feature i { color: var(--gold); font-size: 18px; width: 24px; text-align: center; }
+  .feature span { color: var(--text); font-size: 14px; }
+
+  /* decorative lines */
+  .deco-line {
+    position: absolute;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+    height: 1px; width: 80%;
+  }
+  .deco-line.top    { top: 80px; }
+  .deco-line.bottom { bottom: 80px; }
+
+  /* ─── RIGHT PANEL ─── */
+  .right-panel {
+    width: 480px;
+    background: var(--panel);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 50px 45px;
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+
+  .form-header { margin-bottom: 36px; }
+  .form-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .form-header p { color: var(--muted); font-size: 14px; }
+
+  /* Tabs */
+  .tab-row {
+    display: flex;
+    background: var(--dark3);
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 30px;
+  }
+  .tab-btn {
+    flex: 1; padding: 11px;
+    border: none; background: none;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all .25s;
+  }
+  .tab-btn.active {
+    background: var(--gold);
+    color: #000;
+    font-weight: 600;
+  }
+
+  /* Form */
+  .form-group { margin-bottom: 18px; }
+  label { display: block; color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: .8px; text-transform: uppercase; margin-bottom: 8px; }
+  .input-wrap { position: relative; }
+  .input-wrap i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 14px; pointer-events: none; }
+  .input-wrap .toggle-pass { pointer-events: all; cursor: pointer; left: auto; right: 14px; }
+  input[type=text], input[type=email], input[type=password], input[type=tel] {
+    width: 100%;
+    padding: 13px 14px 13px 42px;
+    background: var(--dark3);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.12); }
+
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .btn-submit {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--gold), #b8922e);
+    border: none;
+    border-radius: 12px;
+    color: #000;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+    letter-spacing: .5px;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.35); }
+  .btn-submit:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+  .alert {
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-bottom: 18px;
+    display: none;
+    align-items: center;
+    gap: 10px;
+  }
+  .alert.error   { background: rgba(224,90,90,0.15); border: 1px solid rgba(224,90,90,0.3); color: #f08080; }
+  .alert.success { background: rgba(76,175,130,0.15); border: 1px solid rgba(76,175,130,0.3); color: #70d4a8; }
+  .alert.show    { display: flex; }
+
+  .divider { text-align: center; color: var(--muted); font-size: 12px; margin: 20px 0; position: relative; }
+  .divider::before, .divider::after { content: ''; position: absolute; top: 50%; width: 40%; height: 1px; background: rgba(255,255,255,0.08); }
+  .divider::before { left: 0; }
+  .divider::after  { right: 0; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .left-panel { display: none; }
+    .right-panel { width: 100%; padding: 40px 24px; }
+  }
+  @media (max-width: 480px) {
+    .right-panel { padding: 30px 18px; }
+    .row2 { grid-template-columns: 1fr; }
+  }
+
+  .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(0,0,0,0.3); border-top-color: #000; border-radius: 50%; animation: spin .6s linear infinite; margin-right: 8px; vertical-align: middle; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .form-tab { display: none; }
+  .form-tab.active { display: block; }
+</style>
+</head>
+<body>
+
+<!-- LEFT PANEL -->
+<div class="left-panel">
+  <div class="deco-line top"></div>
+  <div class="scales-icon"><i class="fas fa-balance-scale"></i></div>
+  <h1 class="brand-title">Lawyer<br><span>Management</span><br>System</h1>
+  <p class="brand-subtitle">Justice &bull; Precision &bull; Excellence</p>
+  <div class="features">
+    <div class="feature"><i class="fas fa-briefcase"></i><span>Manage all your legal cases in one place</span></div>
+    <div class="feature"><i class="fas fa-users"></i><span>Complete client & user management</span></div>
+    <div class="feature"><i class="fas fa-chart-bar"></i><span>Real-time dashboard & analytics</span></div>
+    <div class="feature"><i class="fas fa-shield-alt"></i><span>Secure role-based access control</span></div>
+  </div>
+  <div class="deco-line bottom"></div>
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="right-panel">
+  <div class="form-header">
+    <h2>Welcome Back</h2>
+    <p>Sign in to your LMS account or create a new one</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tab-row">
+    <button class="tab-btn active" onclick="switchTab('login')"><i class="fas fa-sign-in-alt"></i> Login</button>
+    <button class="tab-btn" onclick="switchTab('signup')"><i class="fas fa-user-plus"></i> Sign Up</button>
+  </div>
+
+  <!-- Alert -->
+  <div class="alert" id="alertBox"><i class="fas fa-circle-info"></i><span id="alertMsg"></span></div>
+
+  <!-- LOGIN FORM -->
+  <div class="form-tab active" id="loginTab">
+    <div class="form-group">
+      <label>Email Address</label>
+      <div class="input-wrap">
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="loginEmail" placeholder="you@example.com">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <div class="input-wrap">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="loginPass" placeholder="Enter your password">
+        <i class="fas fa-eye toggle-pass" onclick="togglePass('loginPass', this)"></i>
+      </div>
+    </div>
+    <button class="btn-submit" id="loginBtn" onclick="doLogin()">
+      <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+    </button>
+    <div class="divider">or</div>
+    <p style="text-align:center;color:var(--muted);font-size:13px;">
+      Don't have an account? <a href="#" onclick="switchTab('signup')" style="color:var(--gold);text-decoration:none;font-weight:600;">Create one free</a>
+    </p>
+  </div>
+
+  <!-- SIGNUP FORM -->
+  <div class="form-tab" id="signupTab">
+    <div class="row2">
+      <div class="form-group">
+        <label>Full Name</label>
+        <div class="input-wrap">
+          <i class="fas fa-user"></i>
+          <input type="text" id="signupName" placeholder="Your full name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Phone</label>
+        <div class="input-wrap">
+          <i class="fas fa-phone"></i>
+          <input type="tel" id="signupPhone" placeholder="+92 300 1234567">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email Address</label>
+      <div class="input-wrap">
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="signupEmail" placeholder="you@example.com">
+      </div>
+    </div>
+    <div class="row2">
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-wrap">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="signupPass" placeholder="Min 6 chars">
+          <i class="fas fa-eye toggle-pass" onclick="togglePass('signupPass', this)"></i>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <div class="input-wrap">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="signupConfirm" placeholder="Repeat password">
+        </div>
+      </div>
+    </div>
+    <button class="btn-submit" id="signupBtn" onclick="doSignup()">
+      <i class="fas fa-user-plus"></i> Create Account
+    </button>
+    <div class="divider">or</div>
+    <p style="text-align:center;color:var(--muted);font-size:13px;">
+      Already have an account? <a href="#" onclick="switchTab('login')" style="color:var(--gold);text-decoration:none;font-weight:600;">Login here</a>
+    </p>
+  </div>
+</div>
+
+<script>
+const API = 'backend/auth.php';
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (tab==='login'&&i===0)||(tab==='signup'&&i===1)));
+  document.querySelectorAll('.form-tab').forEach(f => f.classList.remove('active'));
+  document.getElementById(tab+'Tab').classList.add('active');
+  hideAlert();
+}
+
+function togglePass(id, el) {
+  const inp = document.getElementById(id);
+  if (inp.type === 'password') { inp.type = 'text'; el.classList.replace('fa-eye','fa-eye-slash'); }
+  else { inp.type = 'password'; el.classList.replace('fa-eye-slash','fa-eye'); }
+}
+
+function showAlert(msg, type='error') {
+  const box = document.getElementById('alertBox');
+  box.className = 'alert show ' + type;
+  document.getElementById('alertMsg').textContent = msg;
+}
+function hideAlert() { document.getElementById('alertBox').className = 'alert'; }
+
+function setLoading(btnId, loading, text) {
+  const btn = document.getElementById(btnId);
+  btn.disabled = loading;
+  btn.innerHTML = loading ? `<span class="spinner"></span> ${text}` : text;
+}
+
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPass').value;
+  if (!email || !pass) return showAlert('Please fill in all fields.');
+  setLoading('loginBtn', true, 'Signing in...');
+  hideAlert();
+  try {
+    const fd = new FormData();
+    fd.append('action', 'login');
+    fd.append('email', email);
+    fd.append('password', pass);
+    const res  = await fetch(API, { method: 'POST', body: fd });
+    const data = await res.json();
+    if (data.success) {
+      showAlert('Welcome, ' + data.name + '! Redirecting...', 'success');
+      setTimeout(() => { window.location.href = data.redirect; }, 1000);
+    } else {
+      showAlert(data.message);
+      setLoading('loginBtn', false, '<i class="fas fa-sign-in-alt"></i> Login to Dashboard');
+    }
+  } catch(e) {
+    showAlert('Server error. Check XAMPP is running.');
+    setLoading('loginBtn', false, '<i class="fas fa-sign-in-alt"></i> Login to Dashboard');
+  }
+}
+
+async function doSignup() {
+  const name    = document.getElementById('signupName').value.trim();
+  const phone   = document.getElementById('signupPhone').value.trim();
+  const email   = document.getElementById('signupEmail').value.trim();
+  const pass    = document.getElementById('signupPass').value;
+  const confirm = document.getElementById('signupConfirm').value;
+  if (!name || !email || !pass) return showAlert('Name, email, and password are required.');
+  if (pass.length < 6) return showAlert('Password must be at least 6 characters.');
+  if (pass !== confirm) return showAlert('Passwords do not match.');
+  setLoading('signupBtn', true, 'Creating account...');
+  hideAlert();
+  try {
+    const fd = new FormData();
+    fd.append('action','signup'); fd.append('full_name',name);
+    fd.append('email',email); fd.append('phone',phone);
+    fd.append('password',pass); fd.append('confirm_password',confirm);
+    const res  = await fetch(API, { method: 'POST', body: fd });
+    const data = await res.json();
+    if (data.success) {
+      showAlert(data.message, 'success');
+      setTimeout(() => switchTab('login'), 1500);
+    } else {
+      showAlert(data.message);
+    }
+    setLoading('signupBtn', false, '<i class="fas fa-user-plus"></i> Create Account');
+  } catch(e) {
+    showAlert('Server error. Check XAMPP is running.');
+    setLoading('signupBtn', false, '<i class="fas fa-user-plus"></i> Create Account');
+  }
+}
+
+// Enter key support
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    if (document.getElementById('loginTab').classList.contains('active')) doLogin();
+    else doSignup();
+  }
+});
+</script>
+</body>
+</html>

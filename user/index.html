@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LMS — Lawyer Management System</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="css/user.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-brand">
+    <i class="fas fa-balance-scale"></i>
+    <span>LMS</span>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home" class="active">Home</a></li>
+    <li><a href="#cases">Our Cases</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="user-nav-info" id="userNavInfo" style="display:none">
+      <span id="navUserName"></span>
+      <button class="btn-switch" onclick="switchUser()" title="Switch Account"><i class="fas fa-user-switch"></i></button>
+      <button class="btn-logout" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+    <button class="nav-toggle" onclick="toggleNav()"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><i class="fas fa-balance-scale"></i> Trusted Legal Solutions</div>
+    <h1>Expert Legal<br><em>Representation</em><br>You Can Trust</h1>
+    <p>Comprehensive legal services with decades of combined experience. We fight for justice with precision, integrity, and dedication.</p>
+    <div class="hero-btns">
+      <a href="#cases" class="btn-hero-primary">View Our Cases <i class="fas fa-arrow-right"></i></a>
+      <a href="#contact" class="btn-hero-outline">Get Consultation</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-n" id="heroTotal">—</span><span class="hstat-l">Cases Handled</span></div>
+      <div class="hstat-div"></div>
+      <div class="hstat"><span class="hstat-n" id="heroWon">—</span><span class="hstat-l">Cases Won</span></div>
+      <div class="hstat-div"></div>
+      <div class="hstat"><span class="hstat-n">15+</span><span class="hstat-l">Years Experience</span></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card">
+      <i class="fas fa-gavel hero-card-icon"></i>
+      <div class="hero-card-text">Justice Delivered</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section">
+  <div class="container">
+    <div class="section-label">What We Do</div>
+    <h2 class="section-title">Areas of Practice</h2>
+    <div class="services-grid">
+      <div class="service-card"><div class="svc-icon"><i class="fas fa-home"></i></div><h4>Civil Law</h4><p>Property disputes, contracts, and civil litigation handled with expertise.</p></div>
+      <div class="service-card"><div class="svc-icon"><i class="fas fa-handcuffs"></i></div><h4>Criminal Defense</h4><p>Strong defense representation for all criminal matters and charges.</p></div>
+      <div class="service-card"><div class="svc-icon"><i class="fas fa-heart"></i></div><h4>Family Law</h4><p>Divorce, custody, and family disputes resolved with care.</p></div>
+      <div class="service-card"><div class="svc-icon"><i class="fas fa-building"></i></div><h4>Corporate Law</h4><p>Business formation, contracts, and corporate compliance solutions.</p></div>
+      <div class="service-card"><div class="svc-icon"><i class="fas fa-hard-hat"></i></div><h4>Labor Law</h4><p>Protecting employee rights and resolving workplace disputes.</p></div>
+      <div class="service-card"><div class="svc-icon"><i class="fas fa-landmark"></i></div><h4>Constitutional</h4><p>Fundamental rights protection and constitutional litigation.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section class="cases-section" id="cases">
+  <div class="container">
+    <div class="section-label">Our Portfolio</div>
+    <h2 class="section-title">Featured Legal Cases</h2>
+    <div class="cases-filter">
+      <button class="filter-btn active" data-filter="">All Cases</button>
+      <button class="filter-btn" data-filter="open">Open</button>
+      <button class="filter-btn" data-filter="won">Won</button>
+      <button class="filter-btn" data-filter="closed">Closed</button>
+      <button class="filter-btn" data-filter="pending">Pending</button>
+    </div>
+    <div class="cases-grid" id="publicCasesGrid">
+      <div class="loading-msg"><i class="fas fa-circle-notch fa-spin"></i> Loading cases...</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="container about-inner">
+    <div class="about-text">
+      <div class="section-label">Who We Are</div>
+      <h2>A Legacy of Legal Excellence</h2>
+      <p>Founded over 15 years ago, our firm has been at the forefront of legal advocacy in Pakistan. We combine traditional legal wisdom with modern strategies to deliver exceptional results for our clients.</p>
+      <p>Our team of experienced lawyers handles everything from complex corporate matters to sensitive family cases, always prioritizing our clients' best interests.</p>
+      <div class="about-features">
+        <div class="about-feat"><i class="fas fa-check-circle"></i> Free initial consultation</div>
+        <div class="about-feat"><i class="fas fa-check-circle"></i> 24/7 client support</div>
+        <div class="about-feat"><i class="fas fa-check-circle"></i> Transparent fee structure</div>
+        <div class="about-feat"><i class="fas fa-check-circle"></i> Confidential & trusted</div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <div class="about-card">
+        <i class="fas fa-balance-scale"></i>
+        <h3>Justice First</h3>
+        <p>Every case, every client, every time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">Schedule a Consultation</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="cinfo-item"><i class="fas fa-map-marker-alt"></i><div><strong>Address</strong><span>123 Legal Avenue, Karachi, Pakistan</span></div></div>
+        <div class="cinfo-item"><i class="fas fa-phone"></i><div><strong>Phone</strong><span>+92 21 3456 7890</span></div></div>
+        <div class="cinfo-item"><i class="fas fa-envelope"></i><div><strong>Email</strong><span>info@lms-lawyers.pk</span></div></div>
+        <div class="cinfo-item"><i class="fas fa-clock"></i><div><strong>Office Hours</strong><span>Mon–Sat: 9 AM – 6 PM</span></div></div>
+      </div>
+      <form class="contact-form" onsubmit="submitContact(event)">
+        <div class="row2">
+          <div class="form-grp"><label>Full Name</label><input type="text" placeholder="Your full name" required></div>
+          <div class="form-grp"><label>Phone</label><input type="tel" placeholder="+92 300..."></div>
+        </div>
+        <div class="form-grp"><label>Email</label><input type="email" placeholder="your@email.com" required></div>
+        <div class="form-grp"><label>Legal Matter</label>
+          <select>
+            <option value="">Select Category</option>
+            <option>Civil Law</option><option>Criminal Defense</option><option>Family Law</option>
+            <option>Corporate Law</option><option>Labor Law</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-grp"><label>Message</label><textarea rows="4" placeholder="Briefly describe your legal situation..." required></textarea></div>
+        <button type="submit" class="btn-contact">Send Message <i class="fas fa-paper-plane"></i></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <i class="fas fa-balance-scale"></i>
+      <span>Lawyer Management System</span>
+    </div>
+    <p class="footer-copy">&copy; 2024 LMS. All rights reserved. Justice, Integrity, Excellence.</p>
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#cases">Cases</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="../index.html" style="color:var(--gold)">Admin Login</a>
+    </div>
+  </div>
+</footer>
+
+<!-- CASE DETAIL MODAL -->
+<div class="modal-overlay" id="caseDetailOverlay" onclick="closeCaseDetail(event)">
+  <div class="detail-modal">
+    <button class="detail-close" onclick="closeCaseDetail()"><i class="fas fa-times"></i></button>
+    <div id="caseDetailContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/user.js"></script>
+</body>
+</html>

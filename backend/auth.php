@@ -1,4 +1,6 @@
 <?php
+error_reporting(0);
+ini_set('display_errors', 0);
 require_once 'config.php';
 
 $action = $_POST['action'] ?? $_GET['action'] ?? '';
@@ -42,7 +44,7 @@ function handleLogin() {
 
     $user = $result->fetch_assoc();
 
-    if ($user['status'] === 'inactive') {
+    if (isset($user['status']) && $user['status'] === 'inactive') {
         echo json_encode(['success' => false, 'message' => 'Your account is inactive. Contact admin.']);
         return;
     }
@@ -52,13 +54,12 @@ function handleLogin() {
         return;
     }
 
-    // Set session
     $_SESSION['user_id']   = $user['id'];
     $_SESSION['full_name'] = $user['full_name'];
     $_SESSION['email']     = $user['email'];
     $_SESSION['role']      = $user['role'];
 
-  $redirect = ($user['role'] === 'admin') ? '/admin/dashboard.html' : '/user/index.html';
+    $redirect = ($user['role'] === 'admin') ? '/admin/dashboard.html' : '/user/index.html';
     echo json_encode(['success' => true, 'role' => $user['role'], 'redirect' => $redirect, 'name' => $user['full_name']]);
 
     $stmt->close();
@@ -90,7 +91,6 @@ function handleSignup() {
         return;
     }
 
-    // Check if email exists
     $check = $conn->prepare("SELECT id FROM users WHERE email = ?");
     $check->bind_param("s", $email);
     $check->execute();

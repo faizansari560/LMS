@@ -58,7 +58,7 @@ function handleLogin() {
     $_SESSION['email']     = $user['email'];
     $_SESSION['role']      = $user['role'];
 
-    $redirect = ($user['role'] === 'admin') ? '../LMS/admin/dashboard.html' : '../LMS/user/index.html';
+  $redirect = ($user['role'] === 'admin') ? '/admin/dashboard.html' : '/user/index.html';
     echo json_encode(['success' => true, 'role' => $user['role'], 'redirect' => $redirect, 'name' => $user['full_name']]);
 
     $stmt->close();

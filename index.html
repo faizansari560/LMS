@@ -333,7 +333,7 @@
 </div>
 
 <script>
-const API = 'backend/auth.php';
+const API = './backend/auth.php';
 
 function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (tab==='login'&&i===0)||(tab==='signup'&&i===1)));
@@ -381,8 +381,8 @@ async function doLogin() {
       showAlert(data.message);
       setLoading('loginBtn', false, '<i class="fas fa-sign-in-alt"></i> Login to Dashboard');
     }
-  } catch(e) {
-    showAlert('Server error. Check XAMPP is running.');
+ } catch(e) {
+    showAlert('Server error: ' + e.message);
     setLoading('loginBtn', false, '<i class="fas fa-sign-in-alt"></i> Login to Dashboard');
   }
 }
@@ -413,7 +413,7 @@ async function doSignup() {
     }
     setLoading('signupBtn', false, '<i class="fas fa-user-plus"></i> Create Account');
   } catch(e) {
-    showAlert('Server error. Check XAMPP is running.');
+    showAlert('Server error: ' + e.message);
     setLoading('signupBtn', false, '<i class="fas fa-user-plus"></i> Create Account');
   }
 }

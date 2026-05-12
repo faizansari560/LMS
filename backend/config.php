@@ -1,14 +1,16 @@
 <?php
+error_reporting(0);
+ini_set('display_errors', 0);
 // =============================================
 // Database Configuration
 // =============================================
-define('DB_HOST', getenv('MYSQLHOST')      ?: 'localhost');
-define('DB_USER', getenv('MYSQLUSER')      ?: 'root');
-define('DB_PASS', getenv('MYSQLPASSWORD')  ?: '');
-define('DB_NAME', getenv('MYSQL_DATABASE') ?: 'lms_db');
+define('DB_HOST', getenv('MYSQLHOST')     ?: 'localhost');
+define('DB_USER', getenv('MYSQLUSER')     ?: 'root');
+define('DB_PASS', getenv('MYSQLPASSWORD') ?: '');
+define('DB_NAME', getenv('MYSQLDATABASE') ?: 'lms_db');
 define('DB_PORT', (int)(getenv('MYSQLPORT') ?: 3306));
 
-define('SITE_URL',  getenv('RAILWAY_PUBLIC_DOMAIN')
+define('SITE_URL', getenv('RAILWAY_PUBLIC_DOMAIN')
     ? 'https://' . getenv('RAILWAY_PUBLIC_DOMAIN')
     : 'http://localhost/LMS');
 

@@ -2,18 +2,26 @@
 // =============================================
 // Database Configuration
 // =============================================
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');        // Change to your MySQL username
-define('DB_PASS', '');            // Change to your MySQL password
-define('DB_NAME', 'lms_db');
-define('SITE_URL', 'http://localhost/LMS');
+define('DB_HOST', getenv('MYSQLHOST')      ?: 'localhost');
+define('DB_USER', getenv('MYSQLUSER')      ?: 'root');
+define('DB_PASS', getenv('MYSQLPASSWORD')  ?: '');
+define('DB_NAME', getenv('MYSQL_DATABASE') ?: 'lms_db');
+define('DB_PORT', (int)(getenv('MYSQLPORT') ?: 3306));
+
+define('SITE_URL',  getenv('RAILWAY_PUBLIC_DOMAIN')
+    ? 'https://' . getenv('RAILWAY_PUBLIC_DOMAIN')
+    : 'http://localhost/LMS');
+
 define('SITE_NAME', 'Lawyer Management System');
 
 // Create Connection
 function getConnection() {
-    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
     if ($conn->connect_error) {
-        die(json_encode(['success' => false, 'message' => 'Database connection failed: ' . $conn->connect_error]));
+        die(json_encode([
+            'success' => false,
+            'message' => 'Database connection failed: ' . $conn->connect_error
+        ]));
     }
     $conn->set_charset('utf8mb4');
     return $conn;

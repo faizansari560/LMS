@@ -18,6 +18,12 @@ switch ($action) {
     case 'switch_user':
         handleLogout(true);
         break;
+        case 'reset_pass':                          // ← YEH ADD KARO
+        $conn = getConnection();
+        $hash = password_hash('admin123', PASSWORD_DEFAULT);
+        $conn->query("UPDATE users SET password='$hash' WHERE email='admin@lms.com'");
+        echo json_encode(['success' => true, 'hash' => $hash]);
+    break;
     default:
         echo json_encode(['success' => false, 'message' => 'Invalid action']);
 }
